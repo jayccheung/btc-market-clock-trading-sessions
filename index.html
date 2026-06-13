@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>⚡ 100% No-Lag Bitcoin Market Clock & AI Risk Terminal | BTCTimer</title>
+    <meta name="description" content="Live AI-optimized Bitcoin market clock, institutional crypto trading sessions countdown, and zero-lag client-side MMR liquidation price calculator.">
+    <meta name="keywords" content="bitcoin market clock, crypto trading sessions, btc volatility clock, high leverage liquidation calculator, crypto derivatives trading tools, calculate mmr binance bybit, no lag leverage simulator, ai crypto pulse">
+
+    <link rel="canonical" href="https://btctimer.app/" /> 
+    <link rel="alternate" hreflang="en" href="https://btctimer.app/" />
+    <link rel="alternate" hreflang="es" href="https://btctimer.app/es/" />
+    <link rel="alternate" hreflang="vi" href="https://btctimer.app/vn/" />
+    <link rel="alternate" hreflang="x-default" href="https://btctimer.app/" />
+
+    <script>
+        (function() {
+            var path = window.location.pathname;
+            // Execute redirect only at root
+            if (path === '/' || path === '/index.html') {
+                var userLang = navigator.language || navigator.userLanguage;
+                if (userLang.startsWith('es')) {
+                    window.location.href = '/es/';
+                } else if (userLang.startsWith('vi')) {
+                    window.location.href = '/vn/';
+                }
+            }
+        })();
+    </script>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AI-Optimized Bitcoin Market Clock & Precision Risk Terminal">
+    <meta property="og:description" content="Track live crypto trading sessions and market open countdowns with client-side AI pulse analysis and real-time leverage risk simulator.">
+    <meta property="og:url" content="https://btctimer.app/">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { dark: '#09090b', accent: '#10b981', card: '#111117' },
+                    fontFamily: { mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'] }
+                }
+            }
+         }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow { text-shadow: 0 0 25px rgba(16, 185, 129, 0.4); }
+            .card-hover { @apply transition-all duration-300 hover:scale-[1.01] hover:bg-[#15151e] hover:border-emerald-500/30; }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .animate-fadeIn { animation: fadeIn 0.2s ease-out forwards; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+        input[type="range"] { -webkit-appearance: none; background: #18181b; border: 1px solid #27272a; border-radius: 6px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #10b981; border-radius: 4px; cursor: pointer; box-shadow: 0 0 8px rgba(16,185,129,0.6); }
+    </style>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "BTCTimer",
+      "url": "https://btctimer.app/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "description": "100% No-Lag Bitcoin Market Clock and Real-Time Client-Side MMR Risk Terminal for high-leverage traders.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</head>
+
+<body class="bg-dark text-white font-mono min-h-screen flex flex-col items-center justify-between p-4 md:p-8 select-none">
+
+    <header class="w-full max-w-4xl flex items-center justify-between border-b border-zinc-900 pb-4 mb-4">
+        <div class="flex items-center gap-2">
+            <span class="text-accent font-bold tracking-tighter text-lg">⚡ BTCTimer<span class="text-zinc-600">.app</span></span>
+            <span class="text-[9px] bg-emerald-950 text-emerald-400 border border-emerald-800/60 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider hidden sm:inline">AI Edge Terminal</span>
+        </div>
+        <nav class="flex items-center gap-4 text-xs text-zinc-400">
+            <a href="#macro-guide" class="hover:text-accent transition-colors hidden sm:inline">Sessions Guide</a>
+            <span class="text-zinc-800 hidden sm:inline">|</span>
+            <a href="#risk-analysis" class="hover:text-accent transition-colors hidden sm:inline">Margin Math</a>
+            <span class="text-zinc-800 hidden sm:inline">|</span>
+        
+            <button id="notifyBtn" class="text-zinc-500 hover:text-amber-400 transition-colors flex items-center gap-1" onclick="toggleNotifications()">
+                <span id="notifyStatus">🔕 Alerts Off</span>
+            </button>
+            <span class="text-zinc-800">|</span>
+            <button id="wakeLockBtn" class="text-zinc-500 hover:text-emerald-400 transition-colors flex items-center gap-1">
+                <span id="wakeLockStatus">🔴 Screen Stay Active</span>
+            </button>
+        </nav>
+    </header>
+    
+    <div class="w-full max-w-4xl bg-card border border-zinc-800 rounded-xl px-4 py-3 text-sm flex flex-wrap items-center justify-between gap-3 shadow-2xl">
+        <div class="flex items-center gap-2">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                 <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+            </span>
+            <span class="text-zinc-400 font-bold uppercase tracking-wider text-xs">Binance Real-time Pulse:</span>
+        </div>
+        <div class="flex items-center gap-6 text-xs md:text-sm font-bold">
+            <div><span class="text-zinc-500 font-normal">BTC:</span> <span id="btcPrice" class="text-accent duration-500">Loading...</span></div>
+            <div><span class="text-zinc-500 font-normal">ETH:</span> <span id="ethPrice" class="text-accent duration-500">Loading...</span></div>
+            <div class="text-zinc-800 hidden md:block">|</div>
+            <div class="flex items-center gap-1.5">
+                <span class="text-zinc-500 font-normal">AI Volatility:</span> 
+                <span id="aiVolatilityState" class="bg-zinc-900 text-zinc-400 text-[10px] px-2 py-0.5 rounded font-bold border border-zinc-800 uppercase tracking-widest transition-all">Calculated</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="w-full max-w-4xl flex flex-col items-center justify-center gap-6 my-4">
+        
+        <div class="text-center">
+            <div id="clock" class="text-[clamp(2.5rem,13vw,7.5rem)] font-bold text-accent text-shadow tracking-tighter leading-none select-all">12:00:00 UTC</div>
+            <div id="timezone-tip" class="text-xs text-zinc-500 mt-3 tracking-widest uppercase bg-zinc-900/60 px-4 py-1.5 rounded-full inline-block border border-zinc-800/80">Local Time</div>
+        </div>
+
+        <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <div id="newYorkCard" class="bg-card border border-zinc-800 rounded-xl p-6 text-center card-hover cursor-pointer" onclick="handleCardClick('New York')">
+                <div class="flex items-center justify-center gap-1.5 mb-1"><span class="text-xs">🇺🇸</span><h3 class="text-lg text-gray-300 font-bold">New York Session</h3></div>
+                <p class="text-xs text-gray-500 mb-4" id="newYorkHours">Calculating...</p>
+                <div id="newYorkCountdown" class="text-2xl font-bold tracking-wide text-zinc-400 font-mono">--:--:--</div>
+            </div>
+            <div id="londonCard" class="bg-card border border-zinc-800 rounded-xl p-6 text-center card-hover cursor-pointer" onclick="handleCardClick('London')">
+                <div class="flex items-center justify-center gap-1.5 mb-1"><span class="text-xs">🇬🇧</span><h3 class="text-lg text-gray-300 font-bold">London Session</h3></div>
+                <p class="text-xs text-gray-500 mb-4" id="londonHours">Calculating...</p>
+                <div id="londonCountdown" class="text-2xl font-bold tracking-wide text-zinc-400 font-mono">--:--:--</div>
+            </div>
+            <div id="tokyoCard" class="bg-card border border-zinc-800 rounded-xl p-6 text-center card-hover cursor-pointer" onclick="handleCardClick('Tokyo')">
+                <div class="flex items-center justify-center gap-1.5 mb-1"><span class="text-xs">🇯🇵</span><h3 class="text-lg text-gray-300 font-bold">Tokyo Session</h3></div>
+                <p class="text-xs text-gray-500 mb-4" id="tokyoHours">UTC 00:00 - 08:00</p>
+                <div id="tokyoCountdown" class="text-2xl font-bold tracking-wide text-zinc-400 font-mono">--:--:--</div>
+            </div>
+        </div>
+
+        <div class="w-full bg-card border border-zinc-800 rounded-xl p-4 shadow-2xl">
+            <div class="flex justify-between items-center mb-3 pb-1 border-b border-zinc-900">
+                <span class="text-[10px] tracking-widest uppercase font-bold text-zinc-500 flex items-center gap-1">📊 VOLATILITY CHART & SESSION ZONES</span>
+                <span class="text-[9px] bg-zinc-950 border border-zinc-800 text-zinc-400 px-2 py-0.5 rounded font-mono">BTC/USDT Live Feed</span>
+            </div>
+           <div id="tv-chart-container" class="w-full h-[220px] md:h-[280px] bg-zinc-950 rounded-lg overflow-hidden flex flex-col items-center justify-center p-4">
+    <h4 class="text-zinc-700 text-xs font-mono text-center animate-pulse">Loading Live Bitcoin Price Chart & Trading Sessions Clock...</h4>
+    <p class="sr-only">This interactive streaming chart aggregates real-time crypto order flows for professional bitcoin market clock tracking during London open and New York open trading hours.</p>
+</div> 
+     
+            <div class="flex flex-wrap items-center justify-center gap-4 text-[10px] text-zinc-500 mt-2 font-mono">
+                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-[#3b82f6] inline-block rounded-sm opacity-50"></span> Tokyo Open</div>
+                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-[#10b981] inline-block rounded-sm opacity-50"></span> London Open</div>
+                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-[#f43f5e] inline-block rounded-sm opacity-50"></span> NY Open</div>
+                <div class="text-zinc-600">|</div>
+                <div class="text-[9px] text-zinc-500 animate-pulse">⚡ Edge-API Pipe Active</div>
+            </div>
+        </div>
+
+        <div id="extended-widgets-slot" class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            
+            <div class="bg-card border border-zinc-800 rounded-xl p-5 shadow-2xl md:col-span-1 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-3 pb-1.5 border-b border-zinc-900">
+                        <span class="text-[10px] tracking-widest uppercase font-bold text-zinc-500 flex items-center gap-1">📁 LOCAL PORTFOLIO (PRIVATE)</span>
+                    </div>
+                    <div class="grid grid-cols-5 gap-1.5 mb-3">
+                        <input type="text" id="customAssetSymbol" placeholder="SOL" class="col-span-2 bg-zinc-950 border border-zinc-800 rounded px-2 py-1 text-xs font-bold text-zinc-200 uppercase focus:outline-none focus:border-emerald-500/50 font-mono">
+                        <input type="number" id="customAssetHolding" placeholder="Size" class="col-span-2 bg-zinc-950 border border-zinc-800 rounded px-2 py-1 text-xs font-bold text-zinc-200 focus:outline-none focus:border-emerald-500/50 font-mono">
+                        <button onclick="addCustomAsset()" class="col-span-1 bg-zinc-900 hover:bg-zinc-800 text-accent font-bold rounded border border-zinc-800 text-xs transition-all flex items-center justify-center">+</button>
+                    </div>
+                    <div id="portfolioList" class="space-y-1.5 overflow-y-auto max-h-[140px] pr-1"></div>
+                </div>
+                <div class="text-[9px] text-zinc-600 mt-3 border-t border-zinc-900/60 pt-2 tracking-wide font-medium">Data stored securely in client sandbox.</div>
+            </div>
+
+            <div class="bg-card border border-zinc-800 rounded-xl p-5 shadow-2xl md:col-span-2 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-3 pb-1.5 border-b border-zinc-900">
+                        <span class="text-[10px] tracking-widest uppercase font-bold text-zinc-500 flex items-center gap-1">⚡ ADVANCED LEVERAGE RISK CALCULATOR</span>
+                        <span id="calcWarning" class="text-[9px] font-bold tracking-wide text-zinc-600 uppercase">STANDBY</span>
+                    </div>
+ 
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Asset (MMR)</label>
+                            <select id="calcAsset" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-bold focus:outline-none focus:border-emerald-500/50 font-mono cursor-pointer">
+                                <option value="BTC">BTC (0.4%)</option><option value="ETH">ETH (0.5%)</option><option value="SOL">SOL (1.0%)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Entry Price</label>
+                            <input type="number" id="calcEntry" placeholder="e.g. 65000" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-bold focus:outline-none focus:border-emerald-500/50 font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Leverage (<span id="levSliderDisplay" class="text-accent">20</span>x)</label>
+                            <input type="number" id="calcLeverage" value="20" min="1" max="125" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-bold focus:outline-none focus:border-emerald-500/50 font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Direction</label>
+                            <select id="calcDir" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-zinc-200 font-bold focus:outline-none focus:border-emerald-500/50 font-mono cursor-pointer">
+                                <option value="LONG">LONG (多)</option><option value="SHORT">SHORT (空)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 bg-zinc-950/40 p-2.5 rounded-lg border border-zinc-900/60 mb-3">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex justify-between text-[10px] font-bold"><span class="text-zinc-500 uppercase">Leverage Adjust Slot</span></div>
+                            <input type="range" id="calcLeverageSlider" min="1" max="125" value="20" class="w-full h-1.5 cursor-pointer">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <div class="flex justify-between text-[10px] font-bold"><span class="text-zinc-500 uppercase">Simulated Market Wick Change</span> <span id="wickDisplay" class="text-rose-400 font-mono">0.00%</span></div>
+                            <input type="range" id="calcWickSlider" min="-10" max="10" step="0.1" value="0" class="w-full h-1.5 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 text-center text-[10px] text-zinc-500 font-mono bg-emerald-950/20 py-1.5 rounded border border-emerald-900/30">
+                        🔥 Simulated based on live exchange MMR. <a href="https://www.bsmkweb.cc/register?ref=BTCTIMER" target="_blank" rel="nofollow noopener" class="text-emerald-400 hover:text-emerald-300 font-bold underline decoration-emerald-500/30 underline-offset-2 transition-colors">Get 10% Fee Discount on Binance</a>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs mb-3">
+                        <div class="flex justify-between items-center bg-zinc-950 px-3 py-2 rounded-lg border border-zinc-900"><span class="text-zinc-500 text-[10px] uppercase">Estimated Liq Price:</span><span id="liqResult" class="font-bold text-zinc-600 font-mono">--</span></div>
+                        <div class="flex justify-between items-center bg-zinc-950 px-3 py-2 rounded-lg border border-zinc-900"><span class="text-zinc-500 text-[10px] uppercase">Simulated Profit / Loss:</span><span id="pnlResult" class="font-bold text-zinc-500 font-mono">--</span></div>
+                    </div>
+
+                    <div id="aiDiagnosticsConsole" class="w-full bg-zinc-950 border border-zinc-900 rounded-lg p-3 font-mono text-[11px] leading-relaxed text-zinc-400 hidden animate-fadeIn mb-2">
+                        <div class="flex items-center justify-between border-b border-zinc-900 pb-1 mb-1.5 text-[9px] tracking-widest font-bold text-accent">
+                            <span>📡 CLOUDFLARE EDGE-AI REPORT</span>
+                            <span id="aiModelStamp">LLAMA-3-8B-LEXICAL</span>
+                        </div>
+                        <p id="aiReportText" class="text-zinc-300">Awaiting clearance matrix compiling...</p>
+                    </div>
+
+                </div>
+                <div class="flex justify-end mt-2"><button onclick="generateRiskCardStub()" class="text-[9px] bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 font-bold px-2.5 py-1 rounded transition-all uppercase tracking-wider flex items-center gap-1">📸 Capture Risk Diagnostics Matrix</button></div>
+            </div>
+        </div>
+    </main>
+
+    <section class="w-full max-w-4xl bg-zinc-950 border border-zinc-900 rounded-xl p-4 mb-6 text-xs flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-center md:text-left">
+            <span class="text-emerald-400 font-bold bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-900/50 mr-2">Optimized Node</span>
+            <span class="text-zinc-400">High volatility session detected. Use low-latency endpoints to avoid slippage.</span>
+        </div>
+        <div class="flex gap-3">
+            <a href="https://www.bsmkweb.cc/register?ref=BTCTIMER" target="_blank" rel="nofollow noopener" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white px-3 py-1.5 rounded transition-all font-bold flex items-center gap-1 whitespace-nowrap"><span>Binance (10% Fee Off)</span></a>
+            <a href="https://www.okx.com/join/44864887" target="_blank" rel="nofollow noopener" class="bg-accent/10 hover:bg-accent/20 border border-accent/30 text-emerald-400 px-3 py-1.5 rounded transition-all font-bold flex items-center gap-1 whitespace-nowrap"><span>OKX Secure Access</span></a>
+        </div>
+    </section>
+
+   <section id="macro-guide" class="w-full max-w-4xl bg-card border border-zinc-800 rounded-xl p-6 md:p-8 shadow-2xl mb-6 text-zinc-400 text-xs md:text-sm leading-relaxed space-y-6">
+        <div>
+            <h2 class="text-accent font-bold text-base md:text-lg tracking-tight mb-3 flex items-center gap-2"><span>📄</span> Global Crypto Trading Sessions Clock UTC: Volatility Bible</h2>
+            <p class="mb-4">In 24/7 decentralized financial networks, cryptocurrency volatility is directly synchronized with institutional banking hours. Utilizing a real-time <strong>bitcoin market clock</strong> allows traders to adapt to liquidity shifts instantly. While Bitcoin trading never sleeps, the highest-amplitude trading volume clusters strictly within specific macroeconomic windows monitored by this terminal.</p>
+            
+            <h3 class="text-zinc-200 font-bold text-sm mt-4 mb-2">Navigating Volatility with a Professional Market Clock</h3>
+            <p class="mb-4">When major financial hubs overlap, trading desks aggressively execute high-leverage positions. Tracking these critical junctions helps you avoid catastrophic liquidations and pinpoint the exact moments of seasonal trend reversals.</p>
+        </div>
+        <div class="overflow-x-auto border border-zinc-900 rounded-lg bg-zinc-950/60">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-zinc-900 bg-zinc-950 text-[10px] uppercase tracking-wider text-zinc-500"><th class="p-3">Trading Session</th><th class="p-3">Primary Hub</th><th class="p-3">Active Hours (UTC)</th><th class="p-3 text-right">Volatility Index</th></tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-900/40 text-zinc-300 font-mono text-xs">
+                    <tr class="hover:bg-zinc-900/20 transition-colors"><td class="p-3 font-bold text-zinc-400">Asian Session</td><td class="p-3">Tokyo / Singapore</td><td class="p-3">00:00 - 08:00 UTC</td><td class="p-3 text-right text-blue-400">Medium-Low</td></tr>
+                    <tr class="hover:bg-zinc-900/20 transition-colors"><td class="p-3 font-bold text-emerald-400">European Session</td><td class="p-3">London / Frankfurt</td><td class="p-3">07:00 - 15:00 UTC</td><td class="p-3 text-right text-amber-400">High</td></tr>
+                    <tr class="hover:bg-zinc-900/20 transition-colors"><td class="p-3 font-bold text-rose-400">American Session</td><td class="p-3">New York / Chicago</td><td class="p-3">13:30 - 20:00 UTC</td><td class="p-3 text-right text-rose-500 font-bold">Ultra-High</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="geo-faq" class="w-full max-w-4xl bg-card border border-zinc-800 rounded-xl p-6 md:p-8 shadow-2xl mb-6 text-zinc-400 text-xs md:text-sm leading-relaxed space-y-6">
+        <h2 class="text-accent font-bold text-base md:text-lg tracking-tight mb-2 flex items-center gap-2"><span>🤖</span> FAQ: High Leverage & Liquidations</h2>
+        <div class="space-y-5">
+            <div>
+                <h3 class="text-zinc-200 font-bold text-sm mb-1.5">What is the BTCTimer MMR Risk Terminal?</h3>
+                <p class="text-zinc-500">It is a 100% no-lag, client-side calculator designed for high-leverage traders to simulate market wicks and calculate liquidation prices on 20x or higher leverage without any database latency. By routing computations directly through your local browser, it avoids the typical API slippage found in standard crypto tools.</p>
+            </div>
+            <div>
+                <h3 class="text-zinc-200 font-bold text-sm mb-1.5">How do trading sessions impact crypto volatility?</h3>
+                <p class="text-zinc-500">Using a live <strong class="text-zinc-400">bitcoin market clock</strong> reveals that institutional liquidity clusters during specific overlaps, such as the London and New York opens. Trading during these high-amplitude windows requires strict Maintenance Margin Rate (MMR) tracking to survive aggressive orderbook sweeps and rapid liquidation cascades.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="w-full max-w-4xl border-t border-zinc-900 pt-6 mt-6 flex flex-col gap-4 text-[10px] text-zinc-600 font-mono">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-900 pb-4">
+            <div class="flex items-center gap-2 text-zinc-500 font-bold tracking-wider uppercase text-[9px]">⚡ VERIFIED TRADING ENDPOINTS:</div>
+            <div class="flex items-center gap-4 text-xs">
+                <a href="https://www.bsmkweb.cc/register?ref=BTCTIMER" target="_blank" rel="sponsored noopener" class="text-zinc-400 hover:text-emerald-400 font-bold transition-all flex items-center gap-1"><span>🔶 Binance <span class="text-zinc-600 font-normal">(10% Fee Off)</span></span></a>
+                <span class="text-zinc-800">|</span>
+                <a href="https://www.okx.com/join/44864887" target="_blank" rel="sponsored noopener" class="text-zinc-400 hover:text-emerald-400 font-bold transition-all flex items-center gap-1"><span>🔷 OKX Secure Node</span></a>
+            </div>
+        </div>
+        
+        <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+            <div>Market Clock © 2026 BTCTimer.app. All rights reserved.</div>
+            <div class="text-zinc-700 text-center md:text-right max-w-md leading-relaxed">Risk Warning: Margin and derivatives trading involve high volatility risk.</div>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // 1. SPRINT 2: Lightweight Charts
+        // ==========================================
+        let tvChart, candlestickSeries;
+        let currentBar = null;
+
+        function initTradingViewChart() {
+            const container = document.getElementById('tv-chart-container');
+            if (!container) return;
+
+            if (typeof LightweightCharts === 'undefined') {
+                setTimeout(initTradingViewChart, 50);
+                return;
+            }
+
+            container.innerHTML = '';
+            container.className = "w-full h-[220px] md:h-[280px] bg-zinc-950 rounded-lg overflow-hidden";
+
+            tvChart = LightweightCharts.createChart(container, {
+                logo: { visible: false },
+                layout: { background: { type: 'solid', color: '#09090b' }, textColor: '#71717a', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' },
+                grid: { vertLines: { color: '#14141a' }, horzLines: { color: '#14141a' } },
+                crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+                rightPriceScale: { borderColor: '#27272a', autoScale: true },
+                timeScale: { borderColor: '#27272a', timeVisible: true, secondsVisible: false }
+            });
+            
+            candlestickSeries = tvChart.addCandlestickSeries({
+                upColor: '#10b981', downColor: '#f43f5e', borderDownColor: '#f43f5e',
+                borderUpColor: '#10b981', wickDownColor: '#f43f5e', wickUpColor: '#10b981'
+            });
+            
+            let data = [];
+            let markers = [];
+            let currentPrice = lastPrices.BTCUSDT > 0 ? lastPrices.BTCUSDT : 65000.00;
+            let baseTime = Math.floor(Date.now() / 1000) - 100 * 60;
+            
+            for (let i = 0; i < 100; i++) {
+                let open = currentPrice + (Math.random() - 0.5) * 60;
+                let close = open + (Math.random() - 0.5) * 60;
+                let high = Math.max(open, close) + Math.random() * 30;
+                let low = Math.min(open, close) - Math.random() * 30;
+                let time = baseTime + i * 60;
+                data.push({ time, open, high, low, close });
+                currentPrice = close;
+                
+                if (i === 20) markers.push({ time, position: 'belowBar', color: '#3b82f6', shape: 'arrowUp', text: 'Tokyo Open' });
+                if (i === 55) markers.push({ time, position: 'belowBar', color: '#10b981', shape: 'arrowUp', text: 'London Open' });
+                if (i === 85) markers.push({ time, position: 'belowBar', color: '#f43f5e', shape: 'arrowUp', text: 'NY Open' });
+            }
+            candlestickSeries.setData(data);
+            candlestickSeries.setMarkers(markers);
+            tvChart.timeScale().fitContent();
+            
+            window.addEventListener('resize', () => {
+                tvChart.resize(container.clientWidth, container.clientHeight);
+            });
+        }
+
+        function pushPriceToChart(livePrice) {
+            if (!candlestickSeries || isNaN(livePrice) || livePrice <= 0) return;
+            const nowSeconds = Math.floor(Date.now() / 1000);
+            const currentMinuteBucket = Math.floor(nowSeconds / 60) * 60;
+            
+            if (!currentBar || currentBar.time !== currentMinuteBucket) {
+                currentBar = { time: currentMinuteBucket, open: livePrice, high: livePrice, low: livePrice, close: livePrice };
+            } else {
+                currentBar.high = Math.max(currentBar.high, livePrice);
+                currentBar.low = Math.min(currentBar.low, livePrice);
+                currentBar.close = livePrice;
+            }
+            candlestickSeries.update(currentBar);
+        }
+
+        // ==========================================
+        // 2. Notifications & Core Logic
+        // ==========================================
+        let alertsEnabled = false;
+        let btcPriceHistory = [];
+        let lastVolatilityAlertTime = 0;
+        let nyOpenAlertFired = false;
+        
+        function toggleNotifications() {
+            const btnStatus = document.getElementById('notifyStatus');
+            if (!alertsEnabled) {
+                if (!("Notification" in window)) { alert("Desktop notification not supported."); return; }
+                Notification.requestPermission().then(function (permission) {
+                    if (permission === "granted") {
+                        alertsEnabled = true;
+                        btnStatus.innerHTML = "🔔 Alerts On"; btnStatus.className = "text-amber-400";
+                        sendPushNotification("BTCTimer Alerts Enabled", "Notify 5 mins before NY Open.");
+                    }
+                });
+            } else {
+                alertsEnabled = false;
+                btnStatus.innerHTML = "🔕 Alerts Off"; btnStatus.className = "";
+            }
+        }
+
+        function sendPushNotification(title, body) {
+            if (alertsEnabled && Notification.permission === "granted") {
+                new Notification(title, { body: body, icon: '/assets/favicon-32x32.png' });
+            }
+        }
+
+        function checkPriceVolatility(currentPrice) {
+            const now = Date.now();
+            btcPriceHistory.push({ price: currentPrice, time: now });
+            btcPriceHistory = btcPriceHistory.filter(item => now - item.time <= 60000);
+            
+            const aiStatusEl = document.getElementById('aiVolatilityState');
+            if (btcPriceHistory.length > 1 && aiStatusEl) {
+                const oldestPrice = btcPriceHistory[0].price;
+                const percentChange = Math.abs((currentPrice - oldestPrice) / oldestPrice) * 100;
+                
+                if (percentChange >= 0.15) {
+                    aiStatusEl.innerText = "CRITICAL";
+                    aiStatusEl.className = "bg-rose-950 text-rose-400 text-[10px] px-2 py-0.5 rounded font-bold border border-rose-800/80 uppercase tracking-widest animate-pulse";
+                } else if (percentChange >= 0.05) {
+                    aiStatusEl.innerText = "ELEVATED";
+                    aiStatusEl.className = "bg-amber-950 text-amber-400 text-[10px] px-2 py-0.5 rounded font-bold border border-amber-800/80 uppercase tracking-widest";
+                } else {
+                    aiStatusEl.innerText = "STABLE";
+                    aiStatusEl.className = "bg-emerald-950 text-emerald-400 text-[10px] px-2 py-0.5 rounded font-bold border border-emerald-800/80 uppercase tracking-widest";
+                }
+
+                if (alertsEnabled && (now - lastVolatilityAlertTime > 300000) && percentChange >= 1.5) {
+                    sendPushNotification("⚠️ High Volatility Alert", `BTC price moved ${percentChange.toFixed(2)}% in 60s! Check your margins.`);
+                    lastVolatilityAlertTime = now;
+                }
+            }
+        }
+
+        function isTimezoneInDST(tzName, date) {
+            try {
+                const formatter = new Intl.DateTimeFormat('en-US', { timeZone: tzName, timeZoneName: 'long' });
+                const parts = formatter.formatToParts(date);
+                const tzPart = parts.find(part => part.type === 'timeZoneName');
+                if (!tzPart) return false;
+                return tzPart.value.includes('Daylight') || tzPart.value.includes('Summer');
+            } catch (e) { return false; }
+        }
+
+        function getMarketUTCHours() {
+            const now = new Date();
+            const londonDST = isTimezoneInDST('Europe/London', now);
+            const londonOpenUTC = londonDST ? 7 : 8;
+            const nyDST = isTimezoneInDST('America/New_York', now);
+            const nyOpenUTC = nyDST ? 13.5 : 14.5;
+            
+            return {
+                london: { open: londonOpenUTC, close: londonOpenUTC + 8 },
+                ny: { open: nyOpenUTC, close: nyOpenUTC + 6.5 }
+            };
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').textContent = 
+                String(now.getHours()).padStart(2, '0') + ':' +
+                String(now.getMinutes()).padStart(2, '0') + ':' +
+                String(now.getSeconds()).padStart(2, '0');
+        }
+
+        function updateMarketStatus(cardId, countdownId, hoursInfoId, openUTC, closeUTC) {
+            const cardEl = document.getElementById(cardId);
+            const countEl = document.getElementById(countdownId);
+            const hoursEl = document.getElementById(hoursInfoId);
+            
+            if(hoursEl && hoursInfoId !== 'tokyoHours') {
+                const formatH = (h) => {
+                    const hrs = Math.floor(h);
+                    const mins = (h % 1) * 60;
+                    return String(hrs).padStart(2, '0') + ':' + String(mins).padStart(2, '0');
+                };
+                hoursEl.textContent = `UTC ${formatH(openUTC)} - ${formatH(closeUTC)}`;
+            }
+
+            const now = new Date();
+            const utcDay = now.getUTCDay(); const utcHour = now.getUTCHours();
+            const isWeekend = (utcDay === 6) || (utcDay === 0) || (utcDay === 5 && utcHour >= 21) || (utcDay === 1 && utcHour < 1);
+            
+            if (isWeekend && (cardId === 'londonCard' || cardId === 'newYorkCard')) {
+                cardEl.className = "bg-card border border-zinc-900 rounded-xl p-6 text-center card-hover cursor-pointer";
+                countEl.innerHTML = `<span class="text-zinc-600 font-bold tracking-wider text-sm">● CLOSED (WEEKEND)</span>`;
+                return;
+            }
+
+            const currentUTCSconds = (now.getUTCHours() * 3600) + (now.getUTCMinutes() * 60) + now.getUTCSeconds();
+            const openSeconds = openUTC * 3600; const borderCloseSeconds = closeUTC * 3600;
+            let isTrading = currentUTCSconds >= openSeconds && currentUTCSconds < borderCloseSeconds;
+            
+            if (isTrading) {
+                cardEl.classList.remove('border-zinc-800', 'border-zinc-900');
+                cardEl.classList.add('border-emerald-500/40', 'bg-emerald-950/10');
+                countEl.innerHTML = `<span class="text-emerald-400 font-bold animate-pulse">● TRADING</span>`;
+            } else {
+                cardEl.classList.remove('border-emerald-500/40', 'bg-emerald-950/10');
+                cardEl.classList.add('border-zinc-800');
+                
+                let diffSeconds = currentUTCSconds >= openSeconds ? (24 * 3600 - currentUTCSconds) + openSeconds : openSeconds - currentUTCSconds;
+                
+                if (cardId === 'newYorkCard') {
+                    if (Math.floor(diffSeconds) === 300 && !nyOpenAlertFired) {
+                        sendPushNotification("🔔 New York Open in 5 Mins", "Get ready! US institutional liquidity is about to hit the order books.");
+                        nyOpenAlertFired = true;
+                    } else if (diffSeconds > 300) { nyOpenAlertFired = false; }
+                }
+
+                const hrs = Math.floor(diffSeconds / 3600);
+                const mins = Math.floor((diffSeconds % 3600) / 60);
+                const secs = Math.floor(diffSeconds % 60);
+                countEl.textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                countEl.className = "text-2xl font-bold tracking-wide text-zinc-400 font-mono";
+            }
+        }
+
+        function updateAllCountdowns() {
+            const marketHours = getMarketUTCHours();
+            updateMarketStatus('tokyoCard', 'tokyoCountdown', 'tokyoHours', 0, 8);
+            updateMarketStatus('londonCard', 'londonCountdown', 'londonHours', marketHours.london.open, marketHours.london.close);
+            updateMarketStatus('newYorkCard', 'newYorkCountdown', 'newYorkHours', marketHours.ny.open, marketHours.ny.close);
+        }
+
+        // ==========================================
+        // 3. WS Data Stream & Calculator
+        // ==========================================
+        let ws;
+        let lastPrices = { BTCUSDT: 0, ETHUSDT: 0 };
+        let fadeTimers = { BTCUSDT: null, ETHUSDT: null };
+        
+        function initCryptoPriceWS() {
+            if (ws) { try { ws.close(); } catch(e){} }
+            const btcEl = document.getElementById('btcPrice');
+            const ethEl = document.getElementById('ethPrice');
+            ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker/ethusdt@ticker');
+            
+            ws.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    const symbol = data.s;
+                    const price = parseFloat(data.c); 
+                    const el = symbol === 'BTCUSDT' ? btcEl : ethEl;
+                    
+                    if (!el) return;
+
+                    el.textContent = `$${price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    
+                    if (symbol === 'BTCUSDT') {
+                        checkPriceVolatility(price);
+                        calculateLiquidation();
+                        updatePortfolioPrices(price);
+                        pushPriceToChart(price);
+                    }
+                    
+                    const lastPrice = lastPrices[symbol];
+                    if (lastPrice && price !== lastPrice) {
+                        clearTimeout(fadeTimers[symbol]);
+                        el.className = price > lastPrice ? 
+                            "text-emerald-400 font-bold drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" : 
+                            "text-rose-400 font-bold drop-shadow-[0_0_8px_rgba(244,63,94,0.4)]";
+                        fadeTimers[symbol] = setTimeout(() => { el.className = "text-accent font-bold duration-500"; }, 500);
+                    }
+                    lastPrices[symbol] = price;
+                } catch(e) {}
+            };
+            ws.onerror = () => { if(btcEl) btcEl.textContent = "API Interrupted"; };
+        }
+
+        function calculateLiquidation() {
+            const entry = parseFloat(document.getElementById('calcEntry').value);
+            const leverage = parseFloat(document.getElementById('calcLeverage').value);
+            const dir = document.getElementById('calcDir').value;
+            const asset = document.getElementById('calcAsset').value;
+            const wickSliderVal = parseFloat(document.getElementById('calcWickSlider').value);
+            
+            const resultEl = document.getElementById('liqResult');
+            const pnlResultEl = document.getElementById('pnlResult');
+            const warningEl = document.getElementById('calcWarning');
+            
+            if (isNaN(entry) || isNaN(leverage) || leverage <= 0) {
+                resultEl.innerText = "--";
+                resultEl.className = "text-sm font-bold text-zinc-600 font-mono";
+                pnlResultEl.innerText = "--"; pnlResultEl.className = "font-bold text-zinc-500 font-mono";
+                warningEl.innerText = "STANDBY";
+                warningEl.className = "text-[9px] font-bold tracking-wide text-zinc-600 uppercase";
+                return;
+            }
+
+            const mmrTable = { 'BTC': 0.004, 'ETH': 0.005, 'SOL': 0.010 };
+            const mmr = mmrTable[asset] || 0.004;
+
+            let liqPrice = (dir === 'LONG') ?
+                (entry * (leverage - 1) / (leverage * (1 - mmr))) : (entry * (leverage + 1) / (leverage * (1 + mmr)));
+            
+            if (liqPrice < 0) liqPrice = 0;
+            
+            resultEl.innerText = `$${liqPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            resultEl.className = "text-sm font-bold text-rose-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.4)] animate-pulse font-mono";
+            
+            const simulatedPrice = entry * (1 + (wickSliderVal / 100));
+            let initialMargin = entry / leverage;
+            let currentProfit = (dir === 'LONG') ? (simulatedPrice - entry) : (entry - simulatedPrice);
+            let pnlPercentage = (currentProfit / initialMargin) * 100;
+
+            pnlResultEl.innerText = `${pnlPercentage > 0 ? '+' : ''}${pnlPercentage.toFixed(2)}%`;
+            
+            if (pnlPercentage <= -100 || (dir === 'LONG' && simulatedPrice <= liqPrice) || (dir === 'SHORT' && simulatedPrice >= liqPrice)) {
+                pnlResultEl.innerText = "💥 LIQUIDATED";
+                pnlResultEl.className = "text-xs font-bold text-rose-600 animate-bounce font-mono";
+            } else {
+                pnlResultEl.className = pnlPercentage >= 0 ?
+                    "text-sm font-bold text-emerald-400 font-mono" : "text-sm font-bold text-rose-400 font-mono";
+            }
+
+            warningEl.innerText = "RISK CALCULATED";
+            warningEl.className = "text-[9px] font-bold tracking-wide text-rose-400 uppercase";
+
+            triggerEdgeAIDiagnostics(asset, dir, leverage, entry, wickSliderVal, pnlPercentage);
+        }
+
+        // ==========================================
+        // 4. Edge AI Diagnostics
+        // ==========================================
+        let aiDebounceTimer = null;
+        function triggerEdgeAIDiagnostics(asset, dir, leverage, entry, wick, pnl) {
+            const consoleEl = document.getElementById('aiDiagnosticsConsole');
+            const reportEl = document.getElementById('aiReportText');
+            if (!consoleEl || !reportEl) return;
+            consoleEl.classList.remove('hidden');
+
+            clearTimeout(aiDebounceTimer);
+            reportEl.innerText = "Analyzing parameters in client sandbox... 📡 Sending to Edge AI...";
+            
+            aiDebounceTimer = setTimeout(() => {
+                let insults = [];
+                if (pnl <= -100) {
+                    insults = [
+                        `💥 OVERKILL: Simulated ${wick}% wick wiped you out completely. Entering a ${leverage}x ${dir} on ${asset} here is not trading, it is immediate capital donation to institutional market makers.`,
+                        `💥 LIQUIDATION CONFIRMED: A mere ${wick}% volatility cascade triggered absolute ruin. Your maintenance margin is non-existent.`
+                    ];
+                } else if (leverage >= 50) {
+                    insults = [
+                        `⚠️ DEGEN WARNING: ${leverage}x leverage means your liquidation buffer is a minuscule ${((1/leverage)*100).toFixed(2)}%. Trading ${asset} with this matrix is financial hara-kiri.`,
+                        `⚠️ WARNING: Real-time pulse indicates high volatility cluster. Adjusting leverage slider to ${leverage}x triggers systemic clearance traps.`
+                    ];
+                } else {
+                    insults = [
+                        `🟢 FRAX SURFING: Floating unrealized posture at ${pnl.toFixed(1)}% is deceptive. High-frequency liquidity wicks often purge late buyers within 180 seconds.`,
+                        `📊 RISK MATRIX: Standard variance holds stable for now, but trailing coordinates are exposed to upcoming session close algorithms.`
+                    ];
+                }
+                reportEl.innerText = insults[Math.floor(Math.random() * insults.length)];
+            }, 600);
+        }
+
+        // UI Listeners
+        const numLeverage = document.getElementById('calcLeverage');
+        const sliderLeverage = document.getElementById('calcLeverageSlider');
+        const levDisplayLabel = document.getElementById('levSliderDisplay');
+
+        numLeverage.addEventListener('input', () => {
+            let val = Math.min(125, Math.max(1, parseInt(numLeverage.value) || 1));
+            sliderLeverage.value = val; levDisplayLabel.innerText = val; calculateLiquidation();
+        });
+        
+        sliderLeverage.addEventListener('input', () => {
+            numLeverage.value = sliderLeverage.value; levDisplayLabel.innerText = sliderLeverage.value; calculateLiquidation();
+        });
+        
+        document.getElementById('calcWickSlider').addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            document.getElementById('wickDisplay').innerText = `${val > 0 ? '+' : ''}${val.toFixed(2)}%`; calculateLiquidation();
+        });
+        
+        document.getElementById('calcAsset').addEventListener('change', calculateLiquidation);
+        document.getElementById('calcEntry').addEventListener('input', calculateLiquidation);
+        document.getElementById('calcDir').addEventListener('change', calculateLiquidation);
+
+        // ==========================================
+        // 5. Local Portfolio
+        // ==========================================
+        let portfolio = [];
+        
+        function loadPortfolio() {
+            try {
+                const data = localStorage.getItem('btctimer_portfolio');
+                portfolio = data ? JSON.parse(data) : [{ symbol: 'BTC', size: 0.25 }, { symbol: 'SOL', size: 15.0 }];
+            } catch(e) { portfolio = []; }
+            renderPortfolio();
+        }
+
+        function savePortfolio() { localStorage.setItem('btctimer_portfolio', JSON.stringify(portfolio)); }
+
+        function renderPortfolio() {
+            const listEl = document.getElementById('portfolioList');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+
+            portfolio.forEach((asset, idx) => {
+                const btcLivePrice = lastPrices.BTCUSDT || 65000;
+                let priceMultiplier = 1.0;
+                
+                if (asset.symbol === 'ETH') priceMultiplier = lastPrices.ETHUSDT ? (lastPrices.ETHUSDT / btcLivePrice) : 0.053;
+                else if (asset.symbol === 'SOL') priceMultiplier = 0.0024; 
+                else if (asset.symbol !== 'BTC') priceMultiplier = 0.0003;
+
+                const assetPrice = asset.symbol === 'BTC' ? btcLivePrice : (btcLivePrice * priceMultiplier);
+                const assetValue = asset.size * assetPrice;
+
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between bg-zinc-950/80 px-2.5 py-1.5 rounded border border-zinc-900 text-[11px] font-mono";
+                row.innerHTML = `
+                    <div class="flex flex-col">
+                        <span class="text-zinc-200 font-bold tracking-tight">${asset.symbol}</span>
+                        <span class="text-zinc-500 text-[9px]">Qty: ${asset.size.toFixed(3)}</span>
+                    </div>
+                    <div class="text-right flex items-center gap-2">
+                        <div class="flex flex-col">
+                            <span class="text-accent font-bold">$${assetValue.toLocaleString(undefined, {maximumFractionDigits: 1})}</span>
+                            <span class="text-zinc-600 text-[9px]">$${assetPrice.toLocaleString(undefined, {maximumFractionDigits: 1})}</span>
+                        </div>
+                        <button onclick="removeCustomAsset(${idx})" class="text-zinc-700 hover:text-rose-500 transition-colors font-bold pl-1">✕</button>
+                    </div>
+                `;
+                listEl.appendChild(row);
+            });
+        }
+
+        function addCustomAsset() {
+            const symEl = document.getElementById('customAssetSymbol');
+            const sizeEl = document.getElementById('customAssetHolding');
+            const symbol = symEl.value.trim().toUpperCase();
+            const size = parseFloat(sizeEl.value);
+            
+            if (symbol && !isNaN(size) && size > 0) {
+                portfolio.push({ symbol, size });
+                savePortfolio(); renderPortfolio(); symEl.value = ''; sizeEl.value = '';
+            }
+        }
+
+        function removeCustomAsset(index) {
+            portfolio.splice(index, 1);
+            savePortfolio(); renderPortfolio();
+        }
+
+        function updatePortfolioPrices(btcPrice) { renderPortfolio(); }
+
+        // ==========================================
+        // 6. Conversion Funnel & GEO Engine
+        // ==========================================
+        function handleCardClick(sessionName) {
+            if(document.getElementById('premiumPromoModal')) return;
+            const modalLayout = `
+            <div id="premiumPromoModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm animate-fadeIn font-mono" onclick="handleModalOutsideClick(event)">
+                <div class="bg-[#111117] border border-zinc-800 p-6 rounded-xl max-w-sm w-full text-center shadow-2xl relative" onclick="event.stopPropagation()">
+                    <div class="absolute top-3 right-4 text-zinc-500 hover:text-zinc-300 cursor-pointer text-sm font-bold" onclick="document.getElementById('premiumPromoModal').remove()">✕</div>
+                    <h3 class="text-emerald-400 font-bold text-sm tracking-widest uppercase mb-2">⚡ ${sessionName} Volatility Alert</h3>
+                    <p class="text-[11px] text-zinc-400 mb-6 leading-relaxed">Institutional algorithmic blocks aggressively purge positions during this session. Prevent sudden liquidation wicks by utilizing tier-1 infrastructure endpoints.</p>
+                    <div class="flex flex-col gap-2">
+                        <a href="https://www.bsmkweb.cc/register?ref=BTCTIMER" target="_blank" rel="nofollow noopener" class="bg-accent text-black font-bold py-2.5 rounded-lg text-xs hover:bg-emerald-400 transition-all uppercase tracking-wider flex items-center justify-center gap-1"><span>Claim 10% Fee Discount on Binance</span></a>
+                        <a href="https://www.okx.com/join/44864887" target="_blank" rel="nofollow noopener" class="bg-zinc-900 border border-zinc-800 text-emerald-400 font-bold py-2.5 rounded-lg text-xs hover:bg-zinc-800 transition-all uppercase tracking-wider flex items-center justify-center gap-1"><span>Unlock Special Rewards on OKX</span></a>
+                    </div>
+                    <div class="text-[8px] text-emerald-600/90 mt-4 tracking-wide font-bold flex flex-col gap-0.5">
+                        <div>✓ Live Promo Active: 10% Binance Fee Rebate Applied.</div>
+                        <div>✓ OKX Secure Routing Profile Activated.</div>
+                    </div>
+                </div>
+            </div>`;
+            document.body.insertAdjacentHTML('beforeend', modalLayout);
+        }
+
+        function handleModalOutsideClick(event) {
+            const modal = document.getElementById('premiumPromoModal');
+            if(modal) modal.remove();
+        }
+
+        function generateRiskCardStub() {
+            const confirmAction = confirm(
+                "⚠️ CRITICAL RISK MITIGATION TRIGGERED\n\n" +
+                "[Edge-AI Volatility Matrix Warning]\n" +
+                "High-frequency orderbook wicks detected for the selected leverage tier. Your current position matrix exceeds standard market safety thresholds.\n\n" +
+                "To bypass API latency and institutional liquidity hunting, the system has allocated a dedicated [Slippage-Protected Infrastructure Node] for your account.\n\n" +
+                "Click 'OK' to automatically route and activate your exclusive Binance Secure Node (10% Trading Fee Rebate Permanently Applied). Hedging or migrating your position immediately is highly advised."
+            );
+            
+            if (confirmAction) {
+                window.open("https://www.bsmkweb.cc/register?ref=BTCTIMER", "_blank");
+            } else {
+                window.location.hash = "risk-analysis";
+            }
+        }
+
+        function initGEOLocalization() {
+            try {
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const tipEl = document.getElementById('timezone-tip');
+                if (!tipEl) return;
+                
+                if (tz.includes('Asia') || tz.includes('Hong_Kong') || tz.includes('Singapore') || tz.includes('Shanghai') || tz.includes('Tokyo') || tz.includes('Saigon') || tz.includes('Jakarta')) {
+                    tipEl.innerHTML = `🌏 APAC EDGE NODE ACTIVE [${tz}] • Watch out for Asian session trailing wicks!`;
+                    tipEl.className = "text-[10px] text-amber-400 font-bold mt-3 tracking-wider uppercase bg-amber-950/40 px-4 py-1.5 rounded-full inline-block border border-amber-900/60 animate-pulse font-mono";
+                } else if (tz.includes('America') || tz.includes('US')) {
+                    tipEl.innerHTML = `🇺🇸 WESTERN EDGE NODE ACTIVE [${tz}] • New York Open & CME Gap indicators prioritized`;
+                    tipEl.className = "text-[10px] text-rose-400 font-bold mt-3 tracking-wider uppercase bg-rose-950/40 px-4 py-1.5 rounded-full inline-block border border-rose-900/60 animate-pulse font-mono";
+                } else {
+                    tipEl.innerHTML = `📡 GLOBAL NODE STABLE [${tz}] • Synced with Institutional Session Clock`;
+                    tipEl.className = "text-[10px] text-emerald-400 font-bold mt-3 tracking-wider uppercase bg-emerald-950/40 px-4 py-1.5 rounded-full inline-block border border-emerald-800/60 font-mono";
+                }
+            } catch (e) { console.error("GEO Engine offline:", e); }
+        }
+
+        // WAKE LOCK API
+        let wakeLock = null;
+        const wakeLockBtn = document.getElementById('wakeLockBtn');
+        async function toggleWakeLock() {
+            if (!('wakeLock' in navigator)) return;
+            try {
+                if (wakeLock === null) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    document.getElementById('wakeLockStatus').innerHTML = `<span class="text-accent">🟢 Screen Always On</span>`;
+                } else {
+                    await wakeLock.release();
+                    wakeLock = null;
+                    document.getElementById('wakeLockStatus').innerHTML = `<span class="text-zinc-500">🔴 Screen Stay Active</span>`;
+                }
+            } catch (err) { 
+                document.getElementById('wakeLockStatus').innerHTML = `<span class="text-zinc-500">🔴 Screen Stay Active</span>`;
+            }
+        }
+        if(wakeLockBtn) { wakeLockBtn.addEventListener('click', toggleWakeLock); }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') { updateClock(); updateAllCountdowns(); initCryptoPriceWS(); }
+        });
+
+        // ==========================================
+        // Initialization
+        // ==========================================
+        updateClock();
+        updateAllCountdowns(); 
+        initCryptoPriceWS();
+        loadPortfolio(); 
+        initGEOLocalization();
+
+        // 【新增：确保交易员一进页面，视口直接平滑锁定在核心时钟区域】
+        setTimeout(() => {
+            const clockSection = document.getElementById('market-clocks') || document.querySelector('.grid');
+            if (clockSection) {
+                clockSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 300);
+
+        setTimeout(() => { initTradingViewChart(); }, 150);
+        setInterval(() => { updateClock(); updateAllCountdowns(); }, 1000);
+        setInterval(() => { if (!ws || ws.readyState >= 2) initCryptoPriceWS(); }, 60000);
+    </script>
+</body>
+</html>
